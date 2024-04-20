@@ -1,5 +1,5 @@
 # CST438-A2-Code-Review
-By: Joshua Rivera
+By: Joshua Rivera, Israel Serrano, Adrian Villalpando
 
 This assignment requires us to write a program to accomplish a series of
 tasks, and create a pull request to merge our repository with the repository of a peer.

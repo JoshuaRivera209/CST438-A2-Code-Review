@@ -103,7 +103,7 @@ public class Main {
             username = scanner.nextLine().trim();
         }
         for (Post p : posts){
-            if(validViewer(p.postID, username)){
+            if(validViewer(p.postID, username) && !p.username.equals(username)){
                 System.out.print(p.postID + " ");
             }
         }

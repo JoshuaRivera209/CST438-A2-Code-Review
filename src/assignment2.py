@@ -28,6 +28,7 @@ class Assignment2:
 
                 # Show the user that the data was loaded properly
                 print("Data loaded successfully!")
+                break
             except (FileNotFoundError, IOError) as e:
                 # Print error that was caught
                 print("Error getting data: " + str(e))
@@ -47,9 +48,7 @@ class Assignment2:
     def view_visibility(self):
 
         # Ensures that there is data loaded so that the user can interact with this functionality
-        if len(self.user_data) == 0 and len(self.post_data) == 0:
-            print("You must load data in order to perform other actions.")
-            return
+        self.data_check()
 
         # Takes in user input for post_id and user_id to check visibility of post
         post_id_input = input("Enter post ID: ")
@@ -77,9 +76,7 @@ class Assignment2:
     # Function to display posts that the provided user_id has created
     def retrieve_posts(self):
         # Ensures there is data loaded in order for the user to properly interact with this functionality
-        if len(self.user_data) == 0 and len(self.post_data) == 0:
-            print("You must load data in order to perform other actions.")
-            return
+        self.data_check()
 
         # Takes in a user_id to fetch the corresponding posts
         username = input("Enter user ID: ")
@@ -93,7 +90,9 @@ class Assignment2:
         else:
             for post in self.post_data.values():
                 # If there is a match we add the post_id to the list of matches
-                if post["user_id"] == username:
+                if post["user_id"] != username and post["visibility"] == "public":
+                    posts.append(post["post_id"])
+                elif username in self.user_data[post["user_id"]]["friends_list"]:
                     posts.append(post["post_id"])
 
         # If there are no posts found for the user_id, we show this to the user
@@ -108,9 +107,7 @@ class Assignment2:
     # Function to display display_names based on a provided state inputted by the user
     def search_location(self):
         # Checks that there is data to ensure proper user interaction
-        if len(self.user_data) == 0 and len(self.post_data) == 0:
-            print("You must load data in order to perform other actions.")
-            return
+        self.data_check()
 
         # Takes a state abbreviation as an input
         # Note: This will not check for valid or invalid inputs, it will
@@ -131,6 +128,13 @@ class Assignment2:
         # If there are no users found then we provide that feedback
         if not found_users:
             print("No users found")
+
+    # Function to check if data exists
+    def data_check(self):
+        # Ensures there is data loaded in order for the user to properly interact with this functionality
+        if len(self.user_data) == 0 and len(self.post_data) == 0:
+            print("You must load data in order to perform other actions.")
+            return
 
     # Main driver function of program
     def main(self):
